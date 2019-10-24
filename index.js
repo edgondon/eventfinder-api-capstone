@@ -3,13 +3,13 @@
 function checkValue(inputValue) {
   let outputValue = inputValue;
   if (inputValue == "") {
-      outputValue = 0;
+    outputValue = 0;
   }
   if (inputValue == undefined) {
-      outputValue = 0;
+    outputValue = 0;
   }
   if (inputValue == null) {
-      outputValue = 0;
+    outputValue = 0;
   }
   return outputValue;
 }
@@ -17,10 +17,10 @@ function checkValue(inputValue) {
 function checkText(inputText) {
   let outputText = inputText;
   if (inputText == undefined) {
-      outputText = "";
+    outputText = "";
   }
   if (inputText == null) {
-      outputText = "";
+    outputText = "";
   }
   return outputText;
 }
@@ -28,10 +28,10 @@ function checkText(inputText) {
 function checkURL(inputURL) {
   let outputURL = inputURL;
   if (inputURL == undefined) {
-      outputURL = "/";
+    outputURL = "/";
   }
   if (inputURL == null) {
-      outputURL = "/";
+    outputURL = "/";
   }
   return outputURL;
 }
@@ -42,31 +42,31 @@ function checkURL(inputURL) {
 
 
 function initMap(json) {
-    let map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: -34.397, lng: 150.644 },
-        zoom: 10
-    });
-    let infoWindow = new google.maps.InfoWindow;
+  let map = new google.maps.Map(document.getElementById('map'), {
+    center: { lat: -34.397, lng: 150.644 },
+    zoom: 10
+  });
+  let infoWindow = new google.maps.InfoWindow;
 
-    // Try HTML5 geolocation.
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            let pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            longlat.push(pos);    
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
-            map.setCenter(pos);
-        }, function () {
-            handleLocationError(true, infoWindow, map.getCenter());
-        });
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-    }
+  // Try HTML5 geolocation.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      let pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      longlat.push(pos);
+      infoWindow.setPosition(pos);
+      infoWindow.setContent('Location found.');
+      infoWindow.open(map);
+      map.setCenter(pos);
+    }, function () {
+      handleLocationError(true, infoWindow, map.getCenter());
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+  }
 }
 
 
@@ -75,9 +75,9 @@ let addressGo = [];
 
 function showEvents(json) {
   let nums = Math.min(json.page.size, json.page.totalElements);
-  for(var i=0; i<nums; i++) {
+  for (var i = 0; i < nums; i++) {
     let output = [];
-    if(json._embedded.events[i]._embedded.venues[0].country.countryCode === "US") {
+    if (json._embedded.events[i]._embedded.venues[0].country.countryCode === "US") {
       output = json._embedded.events[i]._embedded.venues[0].state.stateCode;
       $("#events").append(`<li><b>${checkText(json._embedded.events[i].name)}</b>
           <p><i>Venue:</i> ${checkText(json._embedded.events[i]._embedded.venues[0].name)}</p>
@@ -124,27 +124,27 @@ function showEvents(json) {
 
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(browserHasGeolocation ?
+    'Error: The Geolocation service failed.' :
+    'Error: Your browser doesn\'t support geolocation.');
+  infoWindow.open(map);
 }
 
 
 // establish date range for search criteria - upon initial load of page (default values)
-  function datesinConsole() {
-    let now = new Date();
-    let month = (now.getMonth() + 1);               
-    let day = now.getDate();
-    if (month < 10) 
-        month = "0" + month;
-    if (day < 10) 
-        day = "0" + day;
-    let today = now.getFullYear() + '-' + month + '-' + day;
+function datesinConsole() {
+  let now = new Date();
+  let month = (now.getMonth() + 1);
+  let day = now.getDate();
+  if (month < 10)
+    month = "0" + month;
+  if (day < 10)
+    day = "0" + day;
+  let today = now.getFullYear() + '-' + month + '-' + day;
 
-    let month2 = (now.getMonth() + 2);
-    let today2 = now.getFullYear() + '-' + month2 + '-' + day;
+  let month2 = (now.getMonth() + 2);
+  let today2 = now.getFullYear() + '-' + month2 + '-' + day;
 
 
 $('#form1').append(`
@@ -170,80 +170,80 @@ $('#form1').append(`
 };
 
 
-function infosubmit (alpha, omega, radiuss) {
-    
-    
-     $.ajax({
-        type:"GET",
-        url:`https://app.ticketmaster.com/discovery/v2/events.json?apikey=xBC9IrvS6UOYGWmTT1OSvOSVKpalT8XA&latlong=${longlat[0].lat},${longlat[0].lng}&unit=miles&radius=${radiuss}&startDateTime=${alpha}T08:00:00Z&endDateTime=${omega}T07:59:00Z&size=190`,
-        async:true,
-        dataType: "json",
-        success: function(json) {
-                    let e = document.getElementById("events");
-                    e.innerHTML = json.page.totalElements + " events found.";
-                    showEvents(json);
-                    
-                 },
-        error: function(xhr, status, err) {
-                 }
-      }); 
+function infosubmit(alpha, omega, radiuss) {
+
+
+  $.ajax({
+    type: "GET",
+    url: `https://app.ticketmaster.com/discovery/v2/events.json?apikey=xBC9IrvS6UOYGWmTT1OSvOSVKpalT8XA&latlong=${longlat[0].lat},${longlat[0].lng}&unit=miles&radius=${radiuss}&startDateTime=${alpha}T08:00:00Z&endDateTime=${omega}T07:59:00Z&size=190`,
+    async: true,
+    dataType: "json",
+    success: function (json) {
+      let e = document.getElementById("events");
+      e.innerHTML = json.page.totalElements + " events found.";
+      showEvents(json);
+
+    },
+    error: function (xhr, status, err) {
+    }
+  });
 
 
 
 }
 
 function initMap2() {
-    
-    let directionsRenderer = new google.maps.DirectionsRenderer;
-    let directionsService = new google.maps.DirectionsService;
-    let map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 7,
-      center: {lat: 41.85, lng: -87.65}
-    });
-    directionsRenderer.setMap(map);
-    directionsRenderer.setPanel(document.getElementById('right-panel'));
+
+  let directionsRenderer = new google.maps.DirectionsRenderer;
+  let directionsService = new google.maps.DirectionsService;
+  let map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 7,
+    center: { lat: 41.85, lng: -87.65 }
+  });
+  directionsRenderer.setMap(map);
+  directionsRenderer.setPanel(document.getElementById('right-panel'));
 
 
-    if (document.getElementById('floating-panel')==null) {
+  if (document.getElementById('floating-panel') == null) {
 
     let control = document.getElementById('floating-panel');
     control.style.display = 'block';
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
     calculateAndDisplayRoute(directionsService, directionsRenderer);
+  }
+  else {
+    calculateAndDisplayRoute(directionsService, directionsRenderer);
+  }
+
+}
+
+function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+  let start = `${longlat[0].lat},${longlat[0].lng}`;
+  let end = `${addressGo}`;
+  directionsService.route({
+    origin: start,
+    destination: end,
+    travelMode: 'DRIVING'
+  }, function (response, status) {
+    if (status === 'OK') {
+      directionsRenderer.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
     }
-    else {
-      calculateAndDisplayRoute(directionsService, directionsRenderer);
-    }  
-
-  }
-
-  function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-    let start = `${longlat[0].lat},${longlat[0].lng}`;
-    let end = `${addressGo}`;
-    directionsService.route({
-      origin: start,
-      destination: end,
-      travelMode: 'DRIVING'
-    }, function(response, status) {
-      if (status === 'OK') {
-        directionsRenderer.setDirections(response);
-      } else {
-        window.alert('Directions request failed due to ' + status);
-      }
-    });
-  }
+  });
+}
 
 // the function is ran each time the get directions button is pressed.
 
-function displayRadioValue() { 
-  $('#right-panel').removeClass('hidden');  
+function displayRadioValue() {
+  $('#right-panel').removeClass('hidden');
   addressGo.length = 0;
-    $('#right-panel').empty();
-    let ele = $('.helper:checked').val(); 
-    addressGo.push(ele);    
-    initMap2();
-    $('.helper:checked').prop('checked', false);
-    } 
+  $('#right-panel').empty();
+  let ele = $('.helper:checked').val();
+  addressGo.push(ele);
+  initMap2();
+  $('.helper:checked').prop('checked', false);
+}
 
 
 
@@ -259,27 +259,27 @@ function displayRadioValue() {
 
 
 function watchEnter() {
-    datesinConsole();
-    $('#form1').submit(event => {
-        event.preventDefault();
-        $('#right-panel').addClass('hidden');
-        $('#right-panel').empty();
-        $('.results').empty();
-        $('#events').empty();
-// each time user submits form on top of page the three values below are reset accordingly:
-        let alpha = $('#alpha').val();
-        let omega = $('#omega').val();
-        let radiuss = $('#radiuss').val();
-        addressGo.length = 0;
-        
-        
-        $('#map').removeClass('hidden');
-        $('#events').removeClass('hidden');
-        
-        infosubmit(alpha, omega, radiuss);
-        
-        
-    });
+  datesinConsole();
+  $('#form1').submit(event => {
+    event.preventDefault();
+    $('#right-panel').addClass('hidden');
+    $('#right-panel').empty();
+    $('.results').empty();
+    $('#events').empty();
+    // each time user submits form on top of page the three values below are reset accordingly:
+    let alpha = $('#alpha').val();
+    let omega = $('#omega').val();
+    let radiuss = $('#radiuss').val();
+    addressGo.length = 0;
+
+
+    $('#map').removeClass('hidden');
+    $('#events').removeClass('hidden');
+
+    infosubmit(alpha, omega, radiuss);
+
+
+  });
 
 }
 
