@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>This is to Find Events in the user's Area by Date Range</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudfare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+    <link rel="stylesheet" href="index.css">
+
+</head>
+
+<body>
+
+    <header>
+        <h1>
+            To Find Events in your Area by Date Range
+        </h1>
+
+    </header>
+
+
+
+    <section>
+        <form id="form1">
+
+        </form>
+
+    </section>
+
+    <section id="top">
+
+        <ul id="events" aria-live="polite" class="hidden"></ul>
+        <div id="map" aria-live="polite" class="hidden"></div>
+        <div id="right-panel" aria-live="polite" class="hidden"></div>
+
+    </section>
+    
+    <section id="floating-panel"></section>
+
+
+
+
+    <ul class="results">
+
+    </ul>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBssP3Kjt5eSXYxMti1CH9lxZh8Me7S7uY&callback=initMap">
+        </script>
+    <script src="index.js"></script>
+</body>
+
+</html>
